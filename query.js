@@ -337,4 +337,45 @@ query {
   }
 `;
 
+export const get_trendingall = gql`
+query {
+    search(query: " stars:>10000", type: REPOSITORY, first: 10) {
+      edges {
+        node {
+          ... on Repository {
+            name
+            description
+            owner {
+              login
+            }
+            createdAt
+            stargazers {
+              totalCount
+            }
+            url
+            primaryLanguage {
+                name
+              }
+              defaultBranchRef {
+              name
+            }
+            licenseInfo {
+              name
+            }
+            refs(refPrefix: "refs/heads/") {
+              totalCount
+            }
+            object(expression: "master") {
+              ... on Commit {
+                history {
+                  totalCount
+                }
+              }
+            }
+          } 
+        }
+      }
+    }
+  }
+`;
 
